@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 248" width="240" height="248" role="img" aria-label="Eleanor and James monogram crest">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=EB+Garamond:wght@500&amp;display=swap');
+      .script { font-family: 'Great Vibes', cursive; }
+      .serif  { font-family: 'EB Garamond', serif; letter-spacing: 5px; }
+    </style>
+  </defs>
+
+  <!-- rings -->
+  <circle cx="120" cy="122" r="108" fill="none" stroke="#c2a363" stroke-width="1.2" opacity="0.55"/>
+  <circle cx="120" cy="122" r="101" fill="none" stroke="#c2a363" stroke-width="0.8" opacity="0.32"/>
+
+  <!-- laurel stems -->
+    <path d="M130.2,205.4 A84,84 0 0 1 174.0,57.7" fill="none" stroke="#c2a363" stroke-width="1.1" opacity="0.7"/>
+    <path d="M109.8,205.4 A84,84 0 0 0 66.0,57.7" fill="none" stroke="#c2a363" stroke-width="1.1" opacity="0.7"/>
+
+  <!-- laurel leaves -->
+    <ellipse cx="137.5" cy="204.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(168.0 137.5 204.2)"/>
+    <ellipse cx="102.5" cy="204.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(192.0 102.5 204.2)"/>
+    <ellipse cx="171.7" cy="188.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(142.0 171.7 188.2)"/>
+    <ellipse cx="68.3" cy="188.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(218.0 68.3 188.2)"/>
+    <ellipse cx="195.5" cy="158.8" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(116.0 195.5 158.8)"/>
+    <ellipse cx="44.5" cy="158.8" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(244.0 44.5 158.8)"/>
+    <ellipse cx="203.9" cy="124.9" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(92.0 203.9 124.9)"/>
+    <ellipse cx="36.1" cy="124.9" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(268.0 36.1 124.9)"/>
+    <ellipse cx="197.9" cy="90.5" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(68.0 197.9 90.5)"/>
+    <ellipse cx="42.1" cy="90.5" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(292.0 42.1 90.5)"/>
+    <ellipse cx="178.4" cy="61.6" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(44.0 178.4 61.6)"/>
+    <ellipse cx="61.6" cy="61.6" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(316.0 61.6 61.6)"/>
+    <ellipse cx="148.1" cy="185.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(156.0 148.1 185.0)"/>
+    <ellipse cx="91.9" cy="185.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(204.0 91.9 185.0)"/>
+    <ellipse cx="172.9" cy="166.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(130.0 172.9 166.4)"/>
+    <ellipse cx="67.1" cy="166.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(230.0 67.1 166.4)"/>
+    <ellipse cx="187.0" cy="138.7" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(104.0 187.0 138.7)"/>
+    <ellipse cx="53.0" cy="138.7" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(256.0 53.0 138.7)"/>
+    <ellipse cx="188.0" cy="110.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(80.0 188.0 110.0)"/>
+    <ellipse cx="52.0" cy="110.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(280.0 52.0 110.0)"/>
+    <ellipse cx="177.2" cy="83.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(56.0 177.2 83.4)"/>
+    <ellipse cx="62.8" cy="83.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(304.0 62.8 83.4)"/>
+
+  <!-- knot at the base -->
+  <circle cx="120" cy="206" r="3" fill="#b06a5b"/>
+  <path d="M120,206 q-10,7 -20,5" fill="none" stroke="#b06a5b" stroke-width="1.1" opacity="0.7"/>
+  <path d="M120,206 q10,7 20,5" fill="none" stroke="#b06a5b" stroke-width="1.1" opacity="0.7"/>
+
+  <!-- monogram -->
+  <text class="script" x="120" y="138" text-anchor="middle" font-size="60" fill="#b06a5b">E &amp; J</text>
+  <text class="serif"  x="120" y="164" text-anchor="middle" font-size="12" fill="#a08363">2026</text>
+  <text class="serif"  x="120" y="182" text-anchor="middle" font-size="8" letter-spacing="1.5" fill="#a08363">THE OLD MAPLE ORCHARD</text>
+</svg>
