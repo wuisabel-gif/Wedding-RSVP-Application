@@ -1,37 +1,66 @@
-# Wedding RSVP Application
+# Wedding RSVP Guest Management System
 
-A JavaFX desktop application for managing wedding guest RSVPs, meal selections, and party sizes.
+A warm, elegant JavaFX desktop app for managing a wedding guest list: RSVPs, meal
+selections, party sizes, a live response summary, and a countdown to the big day.
 
-This project was created as homework for an Advanced Java course at Santa Monica College.
+## The Story Behind It
+
+I originally built this as a project for my **Advanced Java course at Santa Monica
+College** — a JavaFX exercise in clean MVC structure, data validation, and UI design.
+
+More recently I've **expanded it into a real, usable tool to help my next-door neighbors
+manage the RSVPs for their wedding** , adding the polished wedding theme, the live
+summary and countdown, search, the photo slideshow with music, and more.
+
+> **About this public version:** because the real version holds my neighbors' and their
+> guests' personal information, **this copy has all of that actual data removed and
+> replaced with fictional stand-ins.** The couple here — **Eleanor Hart and James
+> Calloway**, marrying at *The Old Maple Orchard* on *September 12, 2026* — and every
+> guest, photo, and detail are made up. It's the same application, just with placeholder
+> people so nothing private is shared.
+
+## What It Does
+
+- **Add, edit, and delete** guest entries with a polished modal form
+- **Colored RSVP badges** — sage for *Accepted*, rose for *Declined*, gold for *Awaiting reply*
+- **Meal chips** that only apply to guests who've accepted (enforced by validation)
+- **Live search** across name, contact, meal, and notes
+- **At-a-glance summary**: guests attending, total invited, declined, awaiting reply,
+  plates to prepare, and a response-rate percentage
+- **Live countdown** to the wedding day
+- **Validation**: required name, positive party size, sensible email/phone format,
+  no duplicate names, and a meal choice required when someone accepts
 
 ## Design Direction
 
-The desktop app follows a warm, wedding-themed management dashboard inspired by the provided mockup:
+A soft **garden-wedding** palette — ivory, sage green, dusty rose, and antique gold —
+with three bundled typefaces:
 
-- Large editorial heading with a simple subtitle
-- Rounded action buttons for `Add Guest`, `Edit`, `Delete`, and `Refresh`
-- Wide guest table with soft borders and roomy spacing
-- Dedicated RSVP summary card on the right
-- Neutral cream background with terracotta accents
+| Use | Typeface |
+| --- | --- |
+| The couple's names & monogram | **Great Vibes** (script) |
+| Headings, titles, numbers | **Playfair Display** (display serif) |
+| Body & table text | **EB Garamond** (text serif) |
 
-For a static browser-based version of this screen, open [design-preview.html](./design-preview.html).
+Fonts live in `src/main/resources/fonts` and load at startup via `util/FontLoader.java`,
+so the look is identical on any machine without installing anything.
 
-## Features
+For a static browser version of the screen, open [design-preview.html](./design-preview.html).
 
-- Add, edit, delete, and view guest RSVP entries
-- Validate required fields and accepted-meal rules
-- Show live RSVP summary totals
-- Keep UI, controller logic, models, and repository code separated
+To wire a image into the app, drop the file in `src/main/resources/images/` and
+set it as the background of `.hero` in `src/main/resources/styles/app.css`
+(`-fx-background-image: url(...)`), or place it in an `ImageView` at the top of `MainView`.
 
 ## Project Structure
 
-- `src/main/java/app`: JavaFX entrypoint
-- `src/main/java/controller`: UI event handling and workflow
-- `src/main/java/model`: guest model and enums
-- `src/main/java/repository`: in-memory guest storage
-- `src/main/java/util`: validation helpers
-- `src/main/java/view`: JavaFX views and layout components
-- `src/main/resources/styles`: application styling
+- `src/main/java/app` — JavaFX entrypoint (loads fonts, builds the scene)
+- `src/main/java/controller` — UI event handling, search filter, and summary logic
+- `src/main/java/model` — `Guest` model and the `RSVPStatus` / `MealOption` enums
+- `src/main/java/repository` — in-memory guest storage
+- `src/main/java/util` — validation helpers and the font loader
+- `src/main/java/view` — JavaFX views (hero header, table, summary, guest form)
+- `src/main/resources/styles` — the wedding stylesheet
+- `src/main/resources/fonts` — bundled typefaces
 
 ## Run
 
@@ -44,13 +73,3 @@ mvn javafx:run
 ```bash
 mvn package
 ```
-
-## UI Preview
-
-The repository includes a static HTML mockup that recreates the target interface for presentation and design review.
-
-```bash
-open design-preview.html
-```
-
-This HTML preview is not the application runtime, but it matches the visual direction used for the JavaFX implementation.
