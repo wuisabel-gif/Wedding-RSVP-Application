@@ -40,7 +40,7 @@ public class GuestFormController {
         dialog.setTitle(existingGuest == null ? "Add Guest" : "Edit Guest");
 
         GuestFormView view = new GuestFormView();
-        Scene scene = new Scene(new StackPane(view), 480, 420);
+        Scene scene = new Scene(new StackPane(view), 520, 540);
         scene.getStylesheets().add(getClass().getResource("/styles/app.css").toExternalForm());
         ((StackPane) scene.getRoot()).setPadding(new Insets(8));
         dialog.setScene(scene);
@@ -69,8 +69,27 @@ public class GuestFormController {
 
         view.getCancelButton().setOnAction(event -> dialog.close());
 
+        // On macOS a modal dialog can open hidden behind its owner window, which
+        // makes the whole app look frozen. Center it over the owner and force it
+        // to the front once it is shown.
+        dialog.setResizable(false);
+        centerOnOwner(dialog, owner, 520, 540);
+        dialog.setOnShown(event -> {
+            dialog.toFront();
+            dialog.requestFocus();
+            view.getNameField().requestFocus();
+        });
+
         dialog.showAndWait();
         return Optional.ofNullable(result[0]);
+    }
+
+    private void centerOnOwner(Stage dialog, Window owner, double width, double height) {
+        if (owner == null || Double.isNaN(owner.getX()) || owner.getWidth() <= 0) {
+            return;
+        }
+        dialog.setX(owner.getX() + (owner.getWidth() - width) / 2);
+        dialog.setY(owner.getY() + (owner.getHeight() - height) / 2);
     }
 
     private void populateFields(GuestFormView view, Guest guest) {
