@@ -156,7 +156,7 @@ public class MainView extends BorderPane {
     }
 
     private Label buildFooter() {
-        Label footer = new Label("Made with love by the neighbors at No. 11  ·  for Eleanor & James");
+        Label footer = new Label("© 2026 All rights reserved  ·  wuisabel-gif");
         footer.getStyleClass().add("footer-note");
         footer.setMaxWidth(Double.MAX_VALUE);
         footer.setAlignment(Pos.CENTER);
