@@ -1,14 +1,19 @@
 package controller;
 
+import java.util.Locale;
+
 import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Guest;
+import model.MealOption;
 import model.RSVPStatus;
 import repository.GuestRepository;
+import view.AlbumSlideshow;
 import view.MainView;
 
 public class MainController {
@@ -30,8 +35,13 @@ public class MainController {
 
     private void bindView() {
         TableView<Guest> guestTable = view.getGuestTable();
-        guestTable.setItems(repository.getAllGuests());
 
+        FilteredList<Guest> filteredGuests = new FilteredList<>(repository.getAllGuests(), guest -> true);
+        guestTable.setItems(filteredGuests);
+        view.getSearchField().textProperty().addListener((obs, oldText, newText) ->
+                filteredGuests.setPredicate(buildSearchPredicate(newText)));
+
+        view.getAlbumButton().setOnAction(event -> AlbumSlideshow.open(stage));
         view.getAddButton().setOnAction(event -> onAddGuest());
         view.getEditButton().setOnAction(event -> onEditGuest());
         view.getDeleteButton().setOnAction(event -> onDeleteGuest());
@@ -103,13 +113,44 @@ public class MainController {
                 .mapToInt(Guest::getGuestCount)
                 .sum();
 
-        view.getSummaryPane().updateMetrics(totalGuests, acceptedGuests, declinedGuests, pendingGuests, acceptedGuests);
+        long totalParties = repository.getAllGuests().size();
+        long repliedParties = repository.getAllGuests().stream()
+                .filter(guest -> guest.getRsvpStatus() != RSVPStatus.PENDING)
+                .count();
+        int responseRate = totalParties == 0 ? 0 : (int) Math.round(repliedParties * 100.0 / totalParties);
+
+        view.getSummaryPane().updateMetrics(totalGuests, acceptedGuests, declinedGuests, pendingGuests, acceptedGuests, responseRate);
     }
 
+    private java.util.function.Predicate<Guest> buildSearchPredicate(String rawQuery) {
+        String query = rawQuery == null ? "" : rawQuery.trim().toLowerCase(Locale.ROOT);
+        if (query.isEmpty()) {
+            return guest -> true;
+        }
+        return guest -> {
+            String haystack = String.join(" ",
+                    safe(guest.getName()),
+                    safe(guest.getContactInfo()),
+                    safe(guest.getNotes()),
+                    guest.getRsvpStatus() == null ? "" : guest.getRsvpStatus().toString(),
+                    guest.getMealOption() == null ? "" : guest.getMealOption().toString()
+            ).toLowerCase(Locale.ROOT);
+            return haystack.contains(query);
+        };
+    }
+
+    private static String safe(String value) {
+        return value == null ? "" : value;
+    }
+
+    // A handful of the neighbors, friends, and family on Eleanor & James's list.
     private void seedSampleData() {
-        repository.addGuest(new Guest(0, "Alex Rivera", "alex@example.com", 2, RSVPStatus.ACCEPTED, model.MealOption.CHICKEN, "Prefers aisle seating"));
-        repository.addGuest(new Guest(0, "Jordan Lee", "(555) 101-2828", 1, RSVPStatus.PENDING, model.MealOption.NONE, "Waiting on travel plans"));
-        repository.addGuest(new Guest(0, "Priya Shah", "priya@example.com", 3, RSVPStatus.DECLINED, model.MealOption.NONE, "Sending a gift"));
+        repository.addGuest(new Guest(0, "Margaret & Tom Whitfield", "margaret.whitfield@example.com", 2, RSVPStatus.ACCEPTED, MealOption.CHICKEN, "Next-door neighbors — bringing the toast"));
+        repository.addGuest(new Guest(0, "Daniel Calloway", "(555) 318-4420", 1, RSVPStatus.ACCEPTED, MealOption.BEEF, "James's brother & best man"));
+        repository.addGuest(new Guest(0, "Sophie Hart", "sophie.hart@example.com", 2, RSVPStatus.ACCEPTED, MealOption.VEGETARIAN, "Maid of honor (Eleanor's sister)"));
+        repository.addGuest(new Guest(0, "The Nguyen Family", "lan.nguyen@example.com", 4, RSVPStatus.PENDING, MealOption.NONE, "Checking on the kids' babysitter"));
+        repository.addGuest(new Guest(0, "Professor Alan Reyes", "(555) 902-7711", 1, RSVPStatus.PENDING, MealOption.NONE, "Travelling back from a conference"));
+        repository.addGuest(new Guest(0, "Grace & Omar Bishara", "grace.bishara@example.com", 2, RSVPStatus.DECLINED, MealOption.NONE, "Out of town — sending their love"));
     }
 
     private void showInfo(String title, String message) {
