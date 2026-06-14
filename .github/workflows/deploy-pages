@@ -1,0 +1,53 @@
+name: Deploy web preview to GitHub Pages
+
+# Publishes design-preview.html (plus the photos, music, and font it uses) as a
+# static site on GitHub Pages. The JavaFX desktop app itself is not deployed —
+# this is the shareable browser version of the design.
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; newer pushes cancel in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble static site
+        run: |
+          mkdir -p site/src/main/resources
+          # The preview becomes the site's landing page.
+          cp design-preview.html site/index.html
+          # Copy the assets it references, preserving the relative paths.
+          cp -R src/main/resources/images site/src/main/resources/images
+          cp -R src/main/resources/audio  site/src/main/resources/audio
+          cp -R src/main/resources/fonts  site/src/main/resources/fonts
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
