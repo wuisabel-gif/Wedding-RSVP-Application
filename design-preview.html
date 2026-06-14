@@ -1,232 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wedding Guest Manager Preview</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding RSVP Guest Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #f8f6f4;
-      --card: rgba(255, 255, 255, 0.82);
-      --line: #eadfd8;
-      --text: #342621;
-      --muted: #b9afa7;
-      --accent: #bf6a4b;
-      --accent-soft: #dfb7a8;
-      --shadow: 0 16px 40px rgba(98, 61, 43, 0.08);
-      --radius: 34px;
+    @font-face {
+      font-family: "BPG SuperSquare Caps";
+      src: url("src/main/resources/fonts/bpg-supersquare-caps-2013-webfont.ttf") format("truetype");
     }
 
-    * {
-      box-sizing: border-box;
+    :root {
+      --bg-1: #fcf9f4;
+      --bg-2: #f5ede0;
+      --bg-3: #efe4d3;
+      --ink: #3b302b;
+      --muted: #8c7d72;
+      --rose: #b06a5b;
+      --rose-deep: #8f4636;
+      --sage: #7a896a;
+      --sage-deep: #4f6b43;
+      --gold: #c2a363;
+      --line: rgba(176, 106, 91, 0.16);
+      --card: rgba(255, 255, 255, 0.92);
+      --shadow: 0 18px 44px rgba(110, 70, 45, 0.10);
+      --radius: 22px;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Times New Roman", "Times", serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, #ffffff 0%, #f8f6f4 42%, #f4efea 100%);
+      font-family: "EB Garamond", "Iowan Old Style", Palatino, serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
+      font-size: 17px;
     }
 
     .page {
-      width: min(2048px, 100%);
-      min-height: 100vh;
+      width: min(1180px, 100%);
       margin: 0 auto;
-      padding: 28px 22px 32px;
+      padding: 40px 28px 28px;
     }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      text-align: center;
+      border-radius: 24px;
+      padding: 30px 24px 34px;
+      background-image:
+        linear-gradient(to bottom,
+          rgba(252, 249, 244, 0.82) 0%,
+          rgba(251, 246, 238, 0.58) 45%,
+          rgba(245, 237, 224, 0.95) 100%),
+        url("src/main/resources/images/hero.png");
+      background-size: cover;
+      background-position: center 38%;
+      border: 1px solid rgba(176, 106, 91, 0.18);
+      box-shadow: 0 18px 44px rgba(110, 70, 45, 0.14);
+    }
+
+    .crest { display: block; margin: 0 auto 2px; }
 
     .eyebrow {
-      margin: 6px 0 18px;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.01em;
+      margin: 8px 0 0;
+      font-size: 14px;
+      letter-spacing: 5px;
+      color: #a08363;
+      text-transform: uppercase;
     }
 
-    h1 {
-      margin: 0 0 42px;
-      font-size: clamp(42px, 4.2vw, 66px);
-      line-height: 1.08;
-      font-weight: 700;
-      max-width: 1280px;
+    .couple {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(64px, 9vw, 104px);
+      color: var(--rose);
+      line-height: 1.05;
+      margin: 4px 0 2px;
     }
 
-    .actions {
+    .meta {
+      font-family: "Playfair Display", serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: #5c4a40;
+      margin: 6px 0 2px;
+    }
+
+    .venue { color: var(--muted); font-style: italic; font-size: 16px; }
+
+    .ornament {
       display: flex;
-      gap: 22px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 16px 0 6px;
+      color: var(--gold);
+    }
+    .ornament::before, .ornament::after {
+      content: "";
+      width: 90px;
+      height: 1px;
+      background: rgba(176, 106, 91, 0.35);
     }
 
-    .button {
+    .hero-album-button { margin-top: 14px; font-size: 15px; padding: 12px 28px; }
+
+    /* ---------- Toolbar ---------- */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 30px 0 18px;
+    }
+
+    .search {
+      flex: 1 1 260px;
+      max-width: 320px;
+      padding: 10px 18px;
+      border: 1px solid rgba(150, 110, 80, 0.30);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.75);
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--ink);
+    }
+    .search::placeholder { color: #b3a597; }
+    .spacer { flex: 1 1 auto; }
+
+    .btn {
       border: none;
       border-radius: 999px;
-      padding: 24px 34px;
-      font-size: 29px;
-      font-weight: 700;
-      color: #fff;
-      background: var(--accent-soft);
-      box-shadow: var(--shadow);
+      padding: 11px 24px;
+      font-family: "BPG SuperSquare Caps", "Playfair Display", serif;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+    .btn.primary {
+      color: #fffaf4;
+      background: linear-gradient(135deg, #bb7563, #a85a48);
+      box-shadow: 0 8px 18px rgba(150, 80, 60, 0.25);
+    }
+    .btn.ghost {
+      background: rgba(255, 255, 255, 0.65);
+      color: #6c5a4e;
+      border: 1px solid rgba(150, 110, 80, 0.35);
     }
 
-    .button.primary {
-      background: var(--accent);
-    }
-
+    /* ---------- Layout ---------- */
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 460px;
-      gap: 38px;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
       align-items: start;
     }
 
-    .table-card,
-    .summary-card {
+    .card {
       background: var(--card);
-      border: 2px solid rgba(226, 214, 206, 0.9);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(6px);
     }
 
-    .table-card {
-      padding: 24px 24px 18px;
-      overflow: hidden;
-    }
+    /* ---------- Table ---------- */
+    .table-card { padding: 14px 16px; overflow: hidden; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      background: rgba(255, 255, 255, 0.3);
-      overflow: hidden;
-      border-radius: 18px;
-    }
-
-    col:nth-child(1) { width: 17%; }
-    col:nth-child(2) { width: 21%; }
-    col:nth-child(3) { width: 15%; }
-    col:nth-child(4) { width: 13%; }
-    col:nth-child(5) { width: 12%; }
-    col:nth-child(6) { width: 22%; }
+    table { width: 100%; border-collapse: collapse; }
 
     thead th {
-      padding: 14px 10px;
-      font-size: 28px;
-      font-weight: 700;
-      text-align: center;
-      background: linear-gradient(to bottom, #ededed, #dcdcdc);
-      border: 2px solid #d5d5d5;
+      font-family: "Playfair Display", serif;
+      font-size: 14px;
+      color: #9c6848;
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1.4px solid rgba(176, 106, 91, 0.25);
     }
+    thead th.center { text-align: center; }
 
     tbody td {
-      height: 49px;
-      padding: 8px 10px;
-      font-size: 24px;
-      font-style: italic;
-      color: var(--muted);
-      border: 2px solid rgba(229, 229, 229, 0.92);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 12px 10px;
+      font-size: 16px;
+      color: #4a3c34;
+      border-bottom: 1px solid rgba(176, 106, 91, 0.10);
+      vertical-align: middle;
+    }
+    tbody td.center { text-align: center; }
+    tbody tr:nth-child(odd) { background: rgba(247, 239, 228, 0.45); }
+    tbody tr:hover { background: rgba(232, 200, 192, 0.28); }
+    .muted { color: #9b8c7f; font-style: italic; }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-family: "Playfair Display", serif;
+      font-size: 13px;
+    }
+    .badge.accepted { background: #e3ede0; color: var(--sage-deep); }
+    .badge.declined { background: #f4e1dc; color: #a0493d; }
+    .badge.pending  { background: #f6ecd6; color: #99752f; }
+
+    .chip {
+      display: inline-block;
+      background: rgba(176, 106, 91, 0.10);
+      color: #8a5648;
+      border-radius: 999px;
+      padding: 3px 12px;
+      font-size: 13px;
     }
 
-    .summary-card {
-      min-height: 1038px;
-      padding: 36px 36px 32px;
+    /* ---------- Summary ---------- */
+    .summary { padding: 24px 22px; }
+    .summary h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 22px;
+      color: #5c3828;
+      margin: 0;
     }
+    .summary .sub { color: #9b8c7f; font-style: italic; font-size: 14px; margin: 2px 0 14px; }
 
-    .summary-card h2 {
-      margin: 0 0 34px;
-      font-size: 36px;
-      line-height: 1.1;
+    .hero-stat { text-align: center; padding: 6px 0 10px; }
+    .hero-stat .num {
+      font-family: "Playfair Display", serif;
+      font-size: 60px;
+      color: var(--sage);
+      line-height: 1;
     }
+    .hero-stat .cap { color: var(--muted); font-style: italic; font-size: 14px; }
+
+    .divider { height: 1px; background: rgba(176, 106, 91, 0.18); margin: 14px 0; }
 
     .metric {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 34px;
-      font-size: 28px;
-      color: var(--muted);
-      font-style: italic;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 10px 0;
     }
-
+    .metric span { color: #7c6255; font-size: 15px; }
     .metric strong {
-      color: var(--text);
-      font-size: 38px;
-      font-style: normal;
+      font-family: "Playfair Display", serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
     }
 
-    @media (max-width: 1280px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
+    .countdown {
+      margin-top: 14px;
+      text-align: center;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(194, 163, 99, 0.40);
+      background: linear-gradient(135deg, #f3ece0, #efe2cf);
+    }
+    .countdown .num {
+      font-family: "Playfair Display", serif;
+      font-size: 34px;
+      color: var(--rose);
+    }
+    .countdown .cap { color: var(--muted); font-style: italic; font-size: 14px; }
 
-      .summary-card {
-        min-height: auto;
-      }
+    /* ---------- Wedding album slideshow ---------- */
+    .slideshow {
+      position: fixed;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2a211c, #1c1714);
+      z-index: 50;
+    }
+    .slideshow.open { display: flex; }
+    .slide-stage {
+      position: relative;
+      width: min(92vw, 1200px);
+      height: 80vh;
+    }
+    .slide-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 1.1s ease;
+    }
+    .slide-layer.show { opacity: 1; }
+    .slide-controls {
+      margin-top: 22px;
+      display: flex;
+      gap: 14px;
+      background: rgba(28, 20, 16, 0.55);
+      padding: 8px 18px;
+      border-radius: 999px;
+    }
+    .slide-controls button {
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      color: #f3e7d6;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .slide-controls button:hover { background: rgba(243, 231, 214, 0.25); }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      text-align: center;
+      color: #a08363;
+      font-style: italic;
+      margin-top: 26px;
+      font-size: 15px;
     }
 
-    @media (max-width: 840px) {
-      .page {
-        padding: 20px 14px 24px;
-      }
-
-      .button {
-        width: 100%;
-        font-size: 22px;
-        padding: 18px 24px;
-      }
-
-      .table-card {
-        overflow-x: auto;
-      }
-
-      table {
-        min-width: 980px;
-      }
-
-      thead th {
-        font-size: 20px;
-      }
-
-      tbody td,
-      .metric {
-        font-size: 20px;
-      }
-
-      .metric strong {
-        font-size: 28px;
-      }
+    @media (max-width: 880px) {
+      .layout { grid-template-columns: 1fr; }
+      .table-card { overflow-x: auto; }
+      table { min-width: 640px; }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <div class="eyebrow">Wedding Guest Manager</div>
-    <h1>Track RSVPs, meals, and party sizes in one place.</h1>
+    <header class="hero">
+      <svg class="crest" viewBox="0 0 240 248" width="150" height="155" role="img" aria-label="Eleanor and James monogram crest">
+        <circle cx="120" cy="122" r="108" fill="none" stroke="#c2a363" stroke-width="1.2" opacity="0.55"/>
+        <circle cx="120" cy="122" r="101" fill="none" stroke="#c2a363" stroke-width="0.8" opacity="0.32"/>
+        <path d="M130.2,205.4 A84,84 0 0 1 174.0,57.7" fill="none" stroke="#c2a363" stroke-width="1.1" opacity="0.7"/>
+        <path d="M109.8,205.4 A84,84 0 0 0 66.0,57.7" fill="none" stroke="#c2a363" stroke-width="1.1" opacity="0.7"/>
+        <ellipse cx="137.5" cy="204.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(168.0 137.5 204.2)"/>
+        <ellipse cx="102.5" cy="204.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(192.0 102.5 204.2)"/>
+        <ellipse cx="171.7" cy="188.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(142.0 171.7 188.2)"/>
+        <ellipse cx="68.3" cy="188.2" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(218.0 68.3 188.2)"/>
+        <ellipse cx="195.5" cy="158.8" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(116.0 195.5 158.8)"/>
+        <ellipse cx="44.5" cy="158.8" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(244.0 44.5 158.8)"/>
+        <ellipse cx="203.9" cy="124.9" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(92.0 203.9 124.9)"/>
+        <ellipse cx="36.1" cy="124.9" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(268.0 36.1 124.9)"/>
+        <ellipse cx="197.9" cy="90.5" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(68.0 197.9 90.5)"/>
+        <ellipse cx="42.1" cy="90.5" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(292.0 42.1 90.5)"/>
+        <ellipse cx="178.4" cy="61.6" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(44.0 178.4 61.6)"/>
+        <ellipse cx="61.6" cy="61.6" rx="12" ry="4.2" fill="#c2a363" opacity="0.9" transform="rotate(316.0 61.6 61.6)"/>
+        <ellipse cx="148.1" cy="185.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(156.0 148.1 185.0)"/>
+        <ellipse cx="91.9" cy="185.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(204.0 91.9 185.0)"/>
+        <ellipse cx="172.9" cy="166.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(130.0 172.9 166.4)"/>
+        <ellipse cx="67.1" cy="166.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(230.0 67.1 166.4)"/>
+        <ellipse cx="187.0" cy="138.7" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(104.0 187.0 138.7)"/>
+        <ellipse cx="53.0" cy="138.7" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(256.0 53.0 138.7)"/>
+        <ellipse cx="188.0" cy="110.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(80.0 188.0 110.0)"/>
+        <ellipse cx="52.0" cy="110.0" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(280.0 52.0 110.0)"/>
+        <ellipse cx="177.2" cy="83.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(56.0 177.2 83.4)"/>
+        <ellipse cx="62.8" cy="83.4" rx="8" ry="3" fill="#c2a363" opacity="0.78" transform="rotate(304.0 62.8 83.4)"/>
+        <circle cx="120" cy="206" r="3" fill="#b06a5b"/>
+        <path d="M120,206 q-10,7 -20,5" fill="none" stroke="#b06a5b" stroke-width="1.1" opacity="0.7"/>
+        <path d="M120,206 q10,7 20,5" fill="none" stroke="#b06a5b" stroke-width="1.1" opacity="0.7"/>
+        <text x="120" y="138" text-anchor="middle" font-size="60" fill="#b06a5b" style="font-family:'Great Vibes',cursive">E &amp; J</text>
+        <text x="120" y="164" text-anchor="middle" font-size="12" fill="#a08363" style="font-family:'EB Garamond',serif;letter-spacing:5px">2026</text>
+        <text x="120" y="182" text-anchor="middle" font-size="8" fill="#a08363" style="font-family:'EB Garamond',serif;letter-spacing:1.5px">THE OLD MAPLE ORCHARD</text>
+      </svg>
+      <p class="eyebrow">Together with their families</p>
+      <h1 class="couple">Eleanor &amp; James</h1>
+      <p class="meta">Saturday, the twelfth of September, 2026</p>
+      <p class="venue">The Old Maple Orchard &nbsp;·&nbsp; Sonoma, California</p>
+      <div class="ornament">❦</div>
+      <button class="btn primary hero-album-button" id="see-album">❦ See Album</button>
+    </header>
 
-    <section class="actions" aria-label="Primary actions">
-      <button class="button primary">Add Guest</button>
-      <button class="button">Edit</button>
-      <button class="button">Delete</button>
-      <button class="button primary">Refresh</button>
+    <section class="toolbar">
+      <input class="search" type="text" placeholder="Search by name, contact, meal, or note…" />
+      <span class="spacer"></span>
+      <button class="btn primary">＋ Add Guest</button>
+      <button class="btn ghost">Edit</button>
+      <button class="btn ghost">Delete</button>
+      <button class="btn ghost">Refresh</button>
     </section>
 
     <section class="layout">
-      <div class="table-card">
-        <table aria-label="Guest RSVP table">
-          <colgroup>
-            <col><col><col><col><col><col>
-          </colgroup>
+      <div class="card table-card">
+        <table>
           <thead>
             <tr>
               <th>Guest Name</th>
               <th>Contact Info</th>
-              <th>Party Size</th>
+              <th class="center">Party</th>
               <th>RSVP</th>
               <th>Meal</th>
               <th>Notes</th>
@@ -234,57 +397,172 @@
           </thead>
           <tbody>
             <tr>
-              <td>Alex Rivera</td>
-              <td>alex@example.com</td>
-              <td>2</td>
-              <td>Accepted</td>
-              <td>Chicken</td>
-              <td>Prefers aisle seating</td>
+              <td>Margaret &amp; Tom Whitfield</td>
+              <td>margaret.whitfield@example.com</td>
+              <td class="center">2</td>
+              <td><span class="badge accepted">Accepted</span></td>
+              <td><span class="chip">Chicken</span></td>
+              <td>Next-door neighbors — bringing the toast</td>
             </tr>
             <tr>
-              <td>Jordan Lee</td>
-              <td>(555) 101-2828</td>
-              <td>1</td>
-              <td>Pending</td>
-              <td>None</td>
-              <td>Waiting on travel plans</td>
+              <td>Daniel Calloway</td>
+              <td>(555) 318-4420</td>
+              <td class="center">1</td>
+              <td><span class="badge accepted">Accepted</span></td>
+              <td><span class="chip">Beef</span></td>
+              <td>James's brother &amp; best man</td>
             </tr>
             <tr>
-              <td>Priya Shah</td>
-              <td>priya@example.com</td>
-              <td>3</td>
-              <td>Declined</td>
-              <td>None</td>
-              <td>Sending a gift</td>
+              <td>Sophie Hart</td>
+              <td>sophie.hart@example.com</td>
+              <td class="center">2</td>
+              <td><span class="badge accepted">Accepted</span></td>
+              <td><span class="chip">Vegetarian</span></td>
+              <td>Maid of honor (Eleanor's sister)</td>
             </tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr>
+              <td>The Nguyen Family</td>
+              <td>lan.nguyen@example.com</td>
+              <td class="center">4</td>
+              <td><span class="badge pending">Pending</span></td>
+              <td class="muted">—</td>
+              <td>Checking on the kids' babysitter</td>
+            </tr>
+            <tr>
+              <td>Professor Alan Reyes</td>
+              <td>(555) 902-7711</td>
+              <td class="center">1</td>
+              <td><span class="badge pending">Pending</span></td>
+              <td class="muted">—</td>
+              <td>Travelling back from a conference</td>
+            </tr>
+            <tr>
+              <td>Grace &amp; Omar Bishara</td>
+              <td>grace.bishara@example.com</td>
+              <td class="center">2</td>
+              <td><span class="badge declined">Declined</span></td>
+              <td class="muted">—</td>
+              <td>Out of town — sending their love</td>
+            </tr>
           </tbody>
         </table>
       </div>
 
-      <aside class="summary-card" aria-label="RSVP summary">
-        <h2>RSVP Summary</h2>
-        <div class="metric"><span>Total Invited</span><strong>6</strong></div>
-        <div class="metric"><span>Accepted</span><strong>2</strong></div>
-        <div class="metric"><span>Declined</span><strong>3</strong></div>
-        <div class="metric"><span>Pending</span><strong>1</strong></div>
-        <div class="metric"><span>Estimated Meals</span><strong>2</strong></div>
+      <aside class="card summary">
+        <h2>The Celebration So Far</h2>
+        <p class="sub">A living tally of every reply</p>
+
+        <div class="hero-stat">
+          <div class="num">5</div>
+          <div class="cap">guests joining the celebration</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="metric"><span>Total invited</span><strong>12</strong></div>
+        <div class="metric"><span>Politely declined</span><strong>2</strong></div>
+        <div class="metric"><span>Awaiting reply</span><strong>5</strong></div>
+        <div class="metric"><span>Plates to prepare</span><strong>5</strong></div>
+
+        <div class="divider"></div>
+
+        <div class="metric"><span>Response rate</span><strong>67%</strong></div>
+
+        <div class="countdown">
+          <div class="num" id="countdown-num">90 days</div>
+          <div class="cap">until they say “I do”</div>
+        </div>
       </aside>
     </section>
+
+    <p class="footer">Made with love by the neighbors at No. 11 &nbsp;·&nbsp; for Eleanor &amp; James</p>
   </main>
+
+  <div class="slideshow" id="slideshow" aria-hidden="true">
+    <div class="slide-stage">
+      <img class="slide-layer" id="slide-a" alt="" />
+      <img class="slide-layer" id="slide-b" alt="" />
+    </div>
+    <div class="slide-controls">
+      <button id="ss-prev" title="Previous">‹</button>
+      <button id="ss-play" title="Pause">❚❚</button>
+      <button id="ss-next" title="Next">›</button>
+      <button id="ss-close" title="Close">✕</button>
+    </div>
+    <audio id="ss-audio" src="src/main/resources/audio/wedding_music.wav" loop></audio>
+  </div>
+
+  <script>
+    // Live countdown to the wedding day, matching the JavaFX app.
+    (function () {
+      var wedding = new Date(2026, 8, 12); // months are 0-indexed: 8 = September
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      var days = Math.round((wedding - today) / 86400000);
+      var el = document.getElementById("countdown-num");
+      if (days > 1) el.textContent = days + " days";
+      else if (days === 1) el.textContent = "Tomorrow";
+      else if (days === 0) el.textContent = "Today!";
+      else el.textContent = "Just married";
+    })();
+
+    // "See Album" → PowerPoint-style slideshow with crossfade + music.
+    (function () {
+      var base = "src/main/resources/images/album/";
+      var photos = ["couple.png", "bride.png", "groom.png", "bridesmaids.png", "families.png"];
+      var box = document.getElementById("slideshow");
+      var layers = [document.getElementById("slide-a"), document.getElementById("slide-b")];
+      var audio = document.getElementById("ss-audio");
+      var playBtn = document.getElementById("ss-play");
+      var index = 0, active = 0, timer = null, playing = true;
+      var INTERVAL = 5000;
+
+      function show(i) {
+        index = (i + photos.length) % photos.length;
+        var incoming = 1 - active;
+        layers[incoming].src = base + photos[index];
+        layers[incoming].classList.add("show");
+        layers[active].classList.remove("show");
+        active = incoming;
+      }
+      function startTimer() {
+        clearInterval(timer);
+        if (playing) timer = setInterval(function () { show(index + 1); }, INTERVAL);
+      }
+      function open() {
+        box.classList.add("open");
+        playing = true; playBtn.textContent = "❚❚";
+        layers[0].classList.remove("show"); layers[1].classList.remove("show");
+        active = 0; index = 0;
+        layers[0].src = base + photos[0];
+        layers[0].classList.add("show");
+        startTimer();
+        audio.currentTime = 0;
+        audio.play().catch(function () {});
+      }
+      function close() {
+        box.classList.remove("open");
+        clearInterval(timer);
+        audio.pause();
+      }
+
+      document.getElementById("see-album").addEventListener("click", open);
+      document.getElementById("ss-close").addEventListener("click", close);
+      document.getElementById("ss-prev").addEventListener("click", function () { show(index - 1); startTimer(); });
+      document.getElementById("ss-next").addEventListener("click", function () { show(index + 1); startTimer(); });
+      playBtn.addEventListener("click", function () {
+        playing = !playing;
+        playBtn.textContent = playing ? "❚❚" : "▶";
+        if (playing) { startTimer(); audio.play().catch(function () {}); }
+        else { clearInterval(timer); audio.pause(); }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (!box.classList.contains("open")) return;
+        if (e.key === "Escape") close();
+        else if (e.key === "ArrowRight") { show(index + 1); startTimer(); }
+        else if (e.key === "ArrowLeft") { show(index - 1); startTimer(); }
+      });
+    })();
+  </script>
 </body>
 </html>
